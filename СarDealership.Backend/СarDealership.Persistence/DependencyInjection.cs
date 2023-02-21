@@ -23,7 +23,8 @@ namespace СarDealership.Persistence
             services.AddDbContext<СarDealershipDbContext>(options =>
             {
                 // TODO : Переделать БД на MS SQl local
-                options.UseSqlite(connectionString);
+                //options.UseSqlite(connectionString);
+                options.UseSqlServer(connectionString, b => b.MigrationsAssembly("СarDealership.WebApi"));
             });
             services.AddScoped<IСarDealershipDbContext>(provider =>
                 provider.GetService<СarDealershipDbContext>());

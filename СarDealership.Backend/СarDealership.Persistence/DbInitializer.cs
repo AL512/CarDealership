@@ -11,7 +11,7 @@
         /// <param name="context">Контекст Бд</param>
         public static void Initialize(СarDealershipDbContext context)
         {
-            context.Database.EnsureDeleted();
+            //context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
         }
     }

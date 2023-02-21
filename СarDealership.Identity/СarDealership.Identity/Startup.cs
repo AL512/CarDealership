@@ -25,7 +25,8 @@ namespace ÑarDealership.Identity
 
             services.AddDbContext<AuthDbContext>(options =>
             {
-                options.UseSqlite(connectionString);
+                //options.UseSqlite(connectionString);
+                options.UseSqlServer(connectionString);
             });
 
             services.AddIdentity<AppUser, IdentityRole>(config =>
