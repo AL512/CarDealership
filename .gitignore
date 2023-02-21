@@ -1,0 +1,22 @@
+﻿################################################################################
+# Данный GITIGNORE-файл был автоматически создан Microsoft(R) Visual Studio.
+################################################################################
+
+/СarDealership.Backend/.vs
+/СarDealership.Backend/СarDealership.Application/bin/Debug
+/СarDealership.Backend/СarDealership.Application/obj
+/СarDealership.Backend/СarDealership.Domain/bin/Debug
+/СarDealership.Backend/СarDealership.Domain/obj
+/СarDealership.Backend/СarDealership.Persistence/bin/Debug
+/СarDealership.Backend/СarDealership.Persistence/obj
+/СarDealership.Backend/СarDealership.Tests/bin/Debug
+/СarDealership.Backend/СarDealership.Tests/obj
+/СarDealership.Backend/СarDealership.WebApi/bin/Debug
+/СarDealership.Backend/СarDealership.WebApi/obj
+/СarDealership.Identity/.vs
+/СarDealership.Identity/СarDealership.Identity/bin/Debug
+/СarDealership.Identity/СarDealership.Identity/obj
+/cardealership.frontend/.idea
+/.vs
+/cardealership.frontend/.gitignore
+/cardealership.frontend/node_modules
