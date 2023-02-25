@@ -9,25 +9,23 @@ import userManager, {
     signinRedirect,
     signoutRedirect
 } from './auth/user-service'
-import './App.css';
+import {AboutPage} from "./pages/AboutPage";
+import {Navigation} from "./components/Navigation";
+import {CarListPage} from "./pages/CarListPage";
+
 
 const App: FC<{}> = (): ReactElement => {
     loadUser();
     return (
-        <div className="App">
-            <header className="App-header">
-                <button onClick={() => signinRedirect()}>Войти</button>
-                <AuthProvider userManager={userManager}>
-                    <Router>
-                        <Routes>
-                            <Route path="/" element={<CarList />} />
-                            <Route path="/signin-oidc" element={<SigninOidc />} />
-                            <Route path="/signout-oidc" element={<SignoutOidc />} />
-                        </Routes>
-                    </Router>
-                </AuthProvider>
-            </header>
-        </div>
+        <>
+            <Navigation/>
+            <Routes>
+                <Route path="/" element={<AboutPage />} />
+                <Route path="/cars" element={<CarListPage />} />
+                <Route path="/signin-oidc" element={<SigninOidc />} />
+                <Route path="/signout-oidc" element={<SignoutOidc />} />
+            </Routes>
+        </>
     );
 };
 
