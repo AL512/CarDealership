@@ -2,51 +2,57 @@ import React, { FC, ReactElement, useRef, useEffect, useState } from 'react';
 import { CreateCarDto, Client, CarLookupDto } from '../api/CarApi';
 import { FormControl } from 'react-bootstrap';
 
-const apiClient = new Client('https://localhost:44397');
+export function useCarList() {
 
-async function createCar(Car: CreateCarDto) {
-    await apiClient.create('1.0', Car);
-    console.log('Car is created.');
-}
+    const apiClient = new Client('https://localhost:44397');
 
-const CarList: FC<{}> = (): ReactElement => {
-    let textInput = useRef(null);
-    const [Cars, setCars] = useState<CarLookupDto[] | undefined>(undefined);
+    const [cars, setCars] = useState<CarLookupDto[]>([]);
+    const [loading, setLoading] = useState(false)
 
-    async function getCars() {
-        const carListVm = await apiClient.getAll('1.0');
-        console.log('CarList 0::', carListVm)
-        setCars(carListVm.cars);
-        console.log('CarList 1::', carListVm.cars)
+    function addCar(car: CarLookupDto) {
+        setCars(prev => [...prev, car])
+        console.log(['addCar', cars])
     }
 
-    useEffect(() => {
-        setTimeout(getCars, 500);
-    }, []);
+    //async function fetchCarList() {
+    //const CarList: FC<{}> = (): ReactElement => {
+        //let textInput = useRef(null);
 
-    const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
-        if (event.key === 'Enter') {
-            const car: CreateCarDto = {
-                name: event.currentTarget.value,
-            };
-            createCar(car);
-            event.currentTarget.value = '';
+
+    async function getCars() {
+        setLoading(true)
+        const carList = await apiClient.getAll('1.0');
+        setCars(carList.cars? carList.cars : [])
+        setLoading(false)
+    }
+
+        useEffect(() => {
             setTimeout(getCars, 500);
-        }
-    };
+        }, []);
 
-    return (
-        <div>
-            Cars
+        /*const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+            if (event.key === 'Enter') {
+                const car: CreateCarDto = {
+                    name: event.currentTarget.value,
+                };
+                createCar(car);
+                event.currentTarget.value = '';
+                setTimeout(getCars, 500);
+            }
+        };*/
+        return {cars, loading, addCar}
+        /*return (
             <div>
-                <FormControl ref={textInput} onKeyPress={handleKeyPress} />
+                Cars
+                <div>
+                    <FormControl ref={textInput} onKeyPress={handleKeyPress} />
+                </div>
+                <section>
+                    {Cars?.map((car) => (
+                        <div>{car.name}</div>
+                    ))}
+                </section>
             </div>
-            <section>
-                {Cars?.map((car) => (
-                    <div>{car.name}</div>
-                ))}
-            </section>
-        </div>
-    );
-};
-export default CarList;
+        );*/
+    //};
+}

@@ -1,9 +1,7 @@
 import { FC, ReactElement } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import AuthProvider from './auth/auth-provider';
+import { Route, Routes } from 'react-router-dom';
 import SigninOidc from './auth/SigninOidc';
 import SignoutOidc from './auth/SignoutOidc';
-import CarList from './carinfo/CarList';
 import userManager, {
     loadUser,
     signinRedirect,

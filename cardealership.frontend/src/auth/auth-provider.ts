@@ -55,7 +55,7 @@ const AuthProvider: FC<AuthProviderProps> = ({
         };
     }, [manager]);
 
-    return React.Children.only(children);
+    return React.Children.toArray(children);
 };
 
 export default AuthProvider;

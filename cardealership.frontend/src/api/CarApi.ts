@@ -41,13 +41,10 @@ export class Client extends ClientBase {
 
         return this.transformOptions(options_)
             .then((transformedOptions_) => {
-                console.log('this.http.fetch(url_, transformedOptions_):: ')
                 return this.http.fetch(url_, transformedOptions_);
             })
             .then((_response: Response) => {
-                console.log('transformOptions:: ', _response)
                 const req: any =  this.processGetAll(_response)
-                console.log('transformOptions req:: ', req)
                 return req;
                 //return this.processGetAll(_response);
             });
@@ -61,18 +58,14 @@ export class Client extends ClientBase {
             response.headers.forEach((v: any, k: any) => (_headers[k] = v));
         }
         if (status === 200) {
-            console.log('status200')
             return response.text().then((_responseText) => {
-                console.log('result200 0:: ')
                 let result200: any = null;
-                console.log('_responseText:: ', _responseText)
                 result200 =
                     _responseText === ''
                         ? null
                         : <CarList>(
                               JSON.parse(_responseText, this.jsonParseReviver)
                           );
-                console.log('result200:: ', result200)
                 return result200;
             });
         } else if (status === 401) {
@@ -416,7 +409,7 @@ export interface CarDetails {
 }
 
 export interface CarList {
-    cars?: CarLookupDto[] | undefined;
+    cars?: CarLookupDto[]
 }
 
 export interface CarLookupDto {
