@@ -1,12 +1,12 @@
 import React, {useContext} from 'react';
 import userManager, {signinRedirect} from "../auth/user-service";
 import AuthProvider from "../auth/auth-provider";
-import {useCarList} from "../carinfo/CarList";
+import {CarList} from "../components/carinfo/CarList";
 import {Loader} from "../components/Loader";
-import {Car} from "../components/Car";
+import {Car} from "../components/carinfo/Car";
 import {ModalContext} from "../context/ModalCarContext";
 import {Modal} from "../components/Modal";
-import {CreateCar} from "../components/CreateCar";
+import {CreateCar} from "../components/carinfo/CreateCar";
 import {CreateCarDto} from "../api/CarApi";
 
 
@@ -15,7 +15,7 @@ import {CreateCarDto} from "../api/CarApi";
  * @constructor
  */
 export function CarListPage() {
-    const {cars, loading, addCar } = useCarList()
+    const {cars, loading, addCar } = CarList()
     const {modal, open: openModal, close: closeModal} =  useContext(ModalContext)
     const  createHandler = (car: CreateCarDto) => {
         closeModal()

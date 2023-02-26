@@ -1,3 +1,6 @@
+/**
+ * Базовый класс клиента
+ */
 export class ClientBase {
     protected transformOptions(options: RequestInit) {
         const token = localStorage.getItem('token');
@@ -7,4 +10,5 @@ export class ClientBase {
         };
         return Promise.resolve(options);
     }
+    protected  BaseUrl?: string = 'https://localhost:44397';
 }

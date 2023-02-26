@@ -1,10 +1,15 @@
 import React, {useState} from "react";
-import {CarDetails, CarLookupDto} from "../api/CarApi";
+import {CarDetails, CarLookupDto} from "../../api/CarApi";
 
 interface CarProps {
     car: CarLookupDto
 }
 
+/**
+ * Отображение информации об автомобиле
+ * @param car
+ * @constructor
+ */
 export function Car({car}: CarProps) {
     return(
         <div

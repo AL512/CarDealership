@@ -1,4 +1,4 @@
-import { ClientBase } from './client-base';
+import { ClientBase } from './ClientBase';
 
 /* tslint:disable */
 /* eslint-disable */
@@ -12,14 +12,14 @@ export class Client extends ClientBase {
         undefined;
 
     constructor(
-        baseUrl?: string,
+        //baseUrl?: string,
         http?: {
             fetch(url: RequestInfo, init?: RequestInit): Promise<Response>;
         }
     ) {
         super();
         this.http = http ? http : <any>window;
-        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : '';
+        this.baseUrl = this.BaseUrl !== undefined && this.BaseUrl !== null ? this.BaseUrl : '';
     }
 
     /**
