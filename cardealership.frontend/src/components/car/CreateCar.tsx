@@ -1,9 +1,10 @@
 import React, {useState} from 'react';
-import {CreateCarDto} from "../../api/CarApi";
+import {ICreateCarDto} from "../../Interfases/CarInterfases";
 import {ErrorMessage} from "../ErrorMessage";
-import {Client} from '../../api/CarApi'
+import {ApiObject, ClientBase} from "../../api/ClientBase";
+
 interface CreateCarProps {
-    onCreate: (car: CreateCarDto) => void
+    onCreate: (car: ICreateCarDto) => void
 }
 
 /**
@@ -15,9 +16,10 @@ export function CreateCar({onCreate}: CreateCarProps)  {
     const [value, setValue] = useState('')
     const [error, setError] = useState('')
 
-    async function createCar(Car: CreateCarDto) {
-        const client = new Client();
-        await client.create('1.0', Car);
+    async function createCar(Car: ICreateCarDto) {
+        // TODO : Create Car
+        const client = new ClientBase();
+        await client.create<ICreateCarDto>('1.0', Car, ApiObject.Car);
         console.log('Car is created');
     }
 
@@ -28,7 +30,7 @@ export function CreateCar({onCreate}: CreateCarProps)  {
             setError('Введите корректное название автомобиля')
             return
         }
-        const car: CreateCarDto = {
+        const car: ICreateCarDto = {
             name: value,
         };
         const responce = createCar(car);

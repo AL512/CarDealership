@@ -1,8 +1,8 @@
 import React, {useState} from "react";
-import {CarDetails, CarLookupDto} from "../../api/CarApi";
+import {ICarDetails, ICarLookupDto} from "../../Interfases/CarInterfases";
 
 interface CarProps {
-    car: CarLookupDto
+    car: ICarLookupDto
 }
 
 /**

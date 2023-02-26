@@ -1,13 +1,13 @@
 import React, {useContext} from 'react';
 import userManager, {signinRedirect} from "../auth/user-service";
 import AuthProvider from "../auth/auth-provider";
-import {CarList} from "../components/carinfo/CarList";
+import {CarList} from "../components/car/CarList";
 import {Loader} from "../components/Loader";
-import {Car} from "../components/carinfo/Car";
+import {Car} from "../components/car/Car";
 import {ModalContext} from "../context/ModalCarContext";
 import {Modal} from "../components/Modal";
-import {CreateCar} from "../components/carinfo/CreateCar";
-import {CreateCarDto} from "../api/CarApi";
+import {CreateCar} from "../components/car/CreateCar";
+import {ICreateCarDto} from "../Interfases/CarInterfases";
 
 
 /**
@@ -17,7 +17,7 @@ import {CreateCarDto} from "../api/CarApi";
 export function CarListPage() {
     const {cars, loading, addCar } = CarList()
     const {modal, open: openModal, close: closeModal} =  useContext(ModalContext)
-    const  createHandler = (car: CreateCarDto) => {
+    const  createHandler = (car: ICreateCarDto) => {
         closeModal()
         addCar(car)
         // TODO : Не срабатывает createHandler при создании авто

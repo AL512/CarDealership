@@ -3,29 +3,16 @@ import { ClientBase } from './ClientBase';
 /* tslint:disable */
 /* eslint-disable */
 
-export class Client extends ClientBase {
-    private http: {
-        fetch(url: RequestInfo, init?: RequestInit): Promise<Response>;
-    };
-    private baseUrl: string;
-    protected jsonParseReviver: ((key: string, value: any) => any) | undefined =
-        undefined;
+export class Client /*extends ClientBase*/ {
 
-    constructor(
-        //baseUrl?: string,
-        http?: {
-            fetch(url: RequestInfo, init?: RequestInit): Promise<Response>;
-        }
-    ) {
-        super();
-        this.http = http ? http : <any>window;
-        this.baseUrl = this.BaseUrl !== undefined && this.BaseUrl !== null ? this.BaseUrl : '';
+    constructor() {
+        //super();
     }
 
     /**
      * @return Success
      */
-    getAll(version: string): Promise<CarList> {
+    /*getAll(version: string): Promise<CarList> {
         let url_ = this.baseUrl + '/api/{version}/Car';
         if (version === undefined || version === null)
             throw new Error("The parameter 'version' must be defined.");
@@ -48,9 +35,9 @@ export class Client extends ClientBase {
                 return req;
                 //return this.processGetAll(_response);
             });
-    }
+    }*/
 
-    protected processGetAll(response: Response): Promise<CarList> {
+    /*protected processGetAll(response: Response): Promise<CarList> {
         const status = response.status;
         console.log('response:: ', response)
         let _headers: any = {};
@@ -97,13 +84,13 @@ export class Client extends ClientBase {
         }
         console.log('Promise.resolve<CarListVm>(<any>null)')
         return Promise.resolve<CarList>(<any>null);
-    }
+    }*/
 
     /**
      * @param body (optional)
      * @return Success
      */
-    create(version: string, body: CreateCarDto | undefined): Promise<string> {
+    /*create(version: string, body: CreateCarDto | undefined): Promise<string> {
         let url_ = this.baseUrl + '/api/{version}/Car';
         if (version === undefined || version === null)
             throw new Error("The parameter 'version' must be defined.");
@@ -143,8 +130,8 @@ export class Client extends ClientBase {
                     _responseText === ''
                         ? null
                         : <string>(
-                              JSON.parse(_responseText, this.jsonParseReviver)
-                          );
+                            JSON.parse(_responseText, this.jsonParseReviver)
+                        );
                 return result201;
             });
         } else if (status === 401) {
@@ -154,8 +141,8 @@ export class Client extends ClientBase {
                     _responseText === ''
                         ? null
                         : <ProblemDetails>(
-                              JSON.parse(_responseText, this.jsonParseReviver)
-                          );
+                            JSON.parse(_responseText, this.jsonParseReviver)
+                        );
                 return throwException(
                     'Unauthorized',
                     status,
@@ -181,7 +168,7 @@ export class Client extends ClientBase {
      * @param body (optional)
      * @return Success
      */
-    update(version: string, body: UpdateCarDto | undefined): Promise<void> {
+    /*update(version: string, body: UpdateCarDto | undefined): Promise<void> {
         let url_ = this.baseUrl + '/api/{version}/Car';
         if (version === undefined || version === null)
             throw new Error("The parameter 'version' must be defined.");
@@ -245,12 +232,12 @@ export class Client extends ClientBase {
             });
         }
         return Promise.resolve<void>(<any>null);
-    }
+    }*/
 
     /**
      * @return Success
      */
-    get(id: string, version: string): Promise<CarDetails> {
+    /*get(id: string, version: string): Promise<CarDetails> {
         let url_ = this.baseUrl + '/api/{version}/Car/{id}';
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
@@ -321,12 +308,12 @@ export class Client extends ClientBase {
             });
         }
         return Promise.resolve<CarDetails>(<any>null);
-    }
+    }*/
 
     /**
      * @return Success
      */
-    delete(id: string, version: string): Promise<void> {
+    /*delete(id: string, version: string): Promise<void> {
         let url_ = this.baseUrl + '/api/{version}/Car/{id}';
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
@@ -388,88 +375,11 @@ export class Client extends ClientBase {
             });
         }
         return Promise.resolve<void>(<any>null);
-    }
+    }*/
 }
 
-export interface CreateCarDto {
-    name: string;
-    pow?: number;
-    long?: number;
-    price?: number;
-}
 
-export interface CarDetails {
-    id?: string;
-    name?: string | undefined;
-    pow?: number;
-    long?: number;
-    price?: number;
-    creationDate?: Date;
-    editDate?: Date | undefined;
-}
 
-export interface CarList {
-    cars?: CarLookupDto[]
-}
 
-export interface CarLookupDto {
-    id?: string;
-    name?: string | undefined;
-}
 
-export interface ProblemDetails {
-    type?: string | undefined;
-    title?: string | undefined;
-    status?: number | undefined;
-    detail?: string | undefined;
-    instance?: string | undefined;
-}
 
-export interface UpdateCarDto {
-    id?: string;
-    name?: string | undefined;
-    pow?: number;
-    long?: number;
-    price?: number;
-}
-
-export class ApiException extends Error {
-    message: string;
-    status: number;
-    response: string;
-    headers: { [key: string]: any };
-    result: any;
-
-    constructor(
-        message: string,
-        status: number,
-        response: string,
-        headers: { [key: string]: any },
-        result: any
-    ) {
-        super();
-
-        this.message = message;
-        this.status = status;
-        this.response = response;
-        this.headers = headers;
-        this.result = result;
-    }
-
-    protected isApiException = true;
-
-    static isApiException(obj: any): obj is ApiException {
-        return obj.isApiException === true;
-    }
-}
-
-function throwException(
-    message: string,
-    status: number,
-    response: string,
-    headers: { [key: string]: any },
-    result?: any
-): any {
-    if (result !== null && result !== undefined) throw result;
-    else throw new ApiException(message, status, response, headers, null);
-}
