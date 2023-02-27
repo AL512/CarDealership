@@ -33,7 +33,8 @@ export function CreateCar({onCreate}: CreateCarProps)  {
             name: value,
         };
         const responce = createCar(car);
-
+        // TODO: Вставить ИД из ответа
+        onCreate(car);
     }
     const changeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
         setValue(event.currentTarget.value)
