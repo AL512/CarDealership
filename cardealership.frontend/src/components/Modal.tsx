@@ -7,7 +7,7 @@ interface  ModalProps{
 }
 
 /**
- * Лснова модального окна
+ * Основа модального окна
  * @param children
  * @param title
  * @param onClose

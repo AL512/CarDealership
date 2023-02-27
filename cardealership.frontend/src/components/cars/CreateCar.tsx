@@ -17,7 +17,6 @@ export function CreateCar({onCreate}: CreateCarProps)  {
     const [error, setError] = useState('')
 
     async function createCar(Car: ICreateCarDto) {
-        // TODO : Create Car
         const client = new ClientBase();
         await client.create<ICreateCarDto>('1.0', Car, ApiObject.Car);
         console.log('Car is created');
