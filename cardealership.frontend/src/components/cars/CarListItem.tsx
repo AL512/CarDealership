@@ -1,8 +1,9 @@
-import React, {useContext, useState} from "react";
+import React, {useContext} from "react";
 import {ICarDetails, ICarLookupDto, ICreateCarDto} from "../../Interfases/CarInterfases";
 import {DialogModalContext} from "../../context/DialogCarModalContext";
 import {Modal} from "../Modal";
 import {DeleteCar} from "./DeleteCar";
+import {NavLink} from 'react-router-dom';
 
 interface ICarProps {
     car: ICarLookupDto
@@ -13,7 +14,7 @@ interface ICarProps {
  * @param car
  * @constructor
  */
-export function Car({car}: ICarProps) {
+export function CarListItem({car}: ICarProps) {
     let {modal, open: openModal, close: closeModal} =  useContext(DialogModalContext)
     const  deleteHandler = (car: ICarLookupDto) => {
         closeModal()
@@ -26,7 +27,12 @@ export function Car({car}: ICarProps) {
         >
             <div className="columns-2">
                 <div>
-                    <p>{car.name}</p>
+                    <NavLink
+                        className="ext-white hover:text-blue-500"
+                        to={`/cars/${car.id}`}
+                    >
+                        {car.name}
+                    </NavLink>
                 </div>
 
                 {modal &&

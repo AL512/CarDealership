@@ -28,7 +28,7 @@ export function DeleteCar(onDelete: DeleteCarProps) {
     async function deleteCar(car: ICarLookupDto) {
         const client = new ClientBase();
         await client.delete( '1.0',  ApiObject.Car, car.id);
-        console.log('Car is delete');
+        console.log('CarListItem is delete');
     }
 
     const submitHandler = async (event: React.FormEvent) => {

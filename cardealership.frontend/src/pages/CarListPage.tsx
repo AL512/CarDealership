@@ -3,7 +3,7 @@ import userManager, {signinRedirect} from "../auth/user-service";
 import AuthProvider from "../auth/auth-provider";
 import {CarList} from "../components/cars/CarList";
 import {Loader} from "../components/Loader";
-import {Car} from "../components/cars/Car";
+import {CarListItem} from "../components/cars/CarListItem";
 import {ModalContext} from "../context/ModalCarContext";
 import {Modal} from "../components/Modal";
 import {CreateCar} from "../components/cars/CreateCar";
@@ -29,7 +29,7 @@ export function CarListPage() {
             <AuthProvider userManager={userManager}>
                 {cars?.map(car =>
                     <ModalState key={car.id}>
-                        <Car car={car}/>
+                        <CarListItem car={car}/>
                     </ModalState>
                 )}
                 { modal &&

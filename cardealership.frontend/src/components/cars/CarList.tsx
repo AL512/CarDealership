@@ -16,6 +16,9 @@ export function CarList() {
      * Состояние списка автомобилей
      */
     const [cars, setCars] = useState<ICarLookupDto[]>([]);
+    /**
+     * Состояние загрузки
+     */
     const [loading, setLoading] = useState(false)
 
     /**

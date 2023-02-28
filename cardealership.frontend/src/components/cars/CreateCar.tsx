@@ -19,7 +19,7 @@ export function CreateCar({onCreate}: CreateCarProps)  {
     async function createCar(Car: ICreateCarDto) {
         const client = new ClientBase();
         await client.create<ICreateCarDto>('1.0', Car, ApiObject.Car);
-        console.log('Car is created');
+        console.log('CarListItem is created');
     }
 
     const submitHandler = async (event: React.FormEvent) => {

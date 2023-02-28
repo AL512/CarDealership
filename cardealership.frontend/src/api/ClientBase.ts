@@ -1,5 +1,12 @@
 import {ApiException} from './ApiException'
-import {ICarList, ICarLookupDto, ICreateCarDto, IProblemDetails} from '../Interfases/CarInterfases'
+import {
+    ICarList,
+    ICarLookupDto,
+    ICreateCarDto,
+    IProblemDetails,
+    ICarDetails
+    }
+    from '../Interfases/CarInterfases'
 
 export enum ApiObject {
     /**
@@ -216,6 +223,13 @@ export class ClientBase {
         return Promise.resolve<string>(<any>null);
     }
 
+    // TODO: Сделать delete джененрик функцией
+    /**
+     * Удалить объект
+     * @param version
+     * @param apiObject
+     * @param id
+     */
     delete(version: string, apiObject: ApiObject, id?: string): Promise<void> {
         let url_ = this.baseUrl + '/api/{version}/{apiObject}/{id}';
         if (id === undefined || id === null)
@@ -279,6 +293,86 @@ export class ClientBase {
             });
         }
         return Promise.resolve<void>(<any>null);
+    }
+
+    /**
+     * Получить объект по ИД
+     * @param version
+     * @param apiObject
+     * @param id
+     */
+    get<TDetails>(version: string, apiObject: ApiObject, id?: string): Promise<TDetails> {
+        let url_ = this.baseUrl + '/api/{version}/{apiObject}/{id}';
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace('{id}', encodeURIComponent('' + id));
+        if (version === undefined || version === null)
+            throw new Error("The parameter 'version' must be defined.");
+        url_ = url_.replace('{version}', encodeURIComponent('' + version));
+        url_ = url_.replace('{apiObject}', encodeURIComponent('' + apiObject));
+        url_ = url_.replace(/[?&]$/, '');
+
+        let options_ = <RequestInit>{
+            method: 'GET',
+            headers: {
+                Accept: 'application/json',
+            },
+        };
+
+        return this.transformOptions(options_)
+            .then((transformedOptions_) => {
+                return this.http.fetch(url_, transformedOptions_);
+            })
+            .then((_response: Response) => {
+                return this.processGet<TDetails>(_response);
+            });
+    }
+
+    protected processGet<TDetails>(response: Response): Promise<TDetails> {
+        const status = response.status;
+        let _headers: any = {};
+        if (response.headers && response.headers.forEach) {
+            response.headers.forEach((v: any, k: any) => (_headers[k] = v));
+        }
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+                let result200: any = null;
+                result200 =
+                    _responseText === ''
+                        ? null
+                        : <TDetails>(
+                            JSON.parse(_responseText, this.jsonParseReviver)
+                        );
+                return result200;
+            });
+        } else if (status === 401) {
+            return response.text().then((_responseText) => {
+                let result401: any = null;
+                result401 =
+                    _responseText === ''
+                        ? null
+                        : <IProblemDetails>(
+                            JSON.parse(_responseText, this.jsonParseReviver)
+                        );
+                return this.throwException(
+                    'Unauthorized',
+                    status,
+                    _responseText,
+                    _headers,
+                    result401
+                );
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+                return this.throwException(
+                    'An unexpected server error occurred.',
+                    status,
+                    _responseText,
+                    _headers
+                );
+            });
+        }
+        return Promise.resolve<TDetails>(<any>null);
     }
 
 
