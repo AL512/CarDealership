@@ -25,8 +25,16 @@ export function CarListPage() {
     }
     return (
         <div className="container mx-auto max-w-2xl pt-5">
-            { loading && <Loader />}
+            {loading && <Loader />}
             <AuthProvider userManager={userManager}>
+                {!loading &&
+                    <button
+                        className="py-2 px-4 border bg-cyan-500 mb-2"
+                        onClick={openModal}
+                    >
+                        Добавить автомобиль
+                    </button>
+                }
                 {cars?.map(car =>
                     <ModalState key={car.id}>
                         <CarListItem car={car}/>
@@ -37,12 +45,7 @@ export function CarListPage() {
                         <CreateCar onCreate={createHandler} />
                     </Modal>
                 }
-                <button
-                    className="absolute border-5 right-5 rounded-full bg-red-700 text-white text-2xl px-4 py-2"
-                    onClick={openModal}
-                >
-                    +
-                </button>
+
             </AuthProvider>
         </div>
     );

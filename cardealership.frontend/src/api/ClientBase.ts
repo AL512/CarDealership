@@ -223,7 +223,6 @@ export class ClientBase {
         return Promise.resolve<string>(<any>null);
     }
 
-    // TODO: Сделать delete джененрик функцией
     /**
      * Удалить объект
      * @param version
