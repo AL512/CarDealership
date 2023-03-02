@@ -42,8 +42,7 @@ export function CreateCar({onCreate}: ICreateCarProps)  {
             setError('Длянна кузова не может быть отрицательной')
             return
         }
-        // TODO: Исправить newPow на newPrice!!!
-        if(newPow <= 0) {
+        if(newPrice <= 0) {
             setError('Стоимость не может быть отрицательной')
             return
         }
