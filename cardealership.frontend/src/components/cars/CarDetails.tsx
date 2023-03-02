@@ -1,8 +1,12 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {ApiObject, ClientBase} from "../../api/ClientBase";
 import {ICarDetails, ICarLookupDto} from "../../Interfases/CarInterfases";
 import {Loader} from "../Loader";
 import {useParams} from "react-router-dom";
+import {DialogModalContext} from "../../context/DialogCarModalContext";
+import {Modal} from "../Modal";
+import {UpdateCar} from "./UpdateCar";
+import {ModalContext} from "../../context/ModalCarContext";
 
 export interface ICarDetailsProps {
     carLookup: ICarLookupDto
@@ -21,17 +25,20 @@ export function CarDetails() {
      */
     const apiClient = new ClientBase();
 
-    const carUndf: ICarDetails = {
-        name: "Неизвестный",
-        pow: 0,
-        long: 0,
-        price: 0
-    };
-
     /**
      * Состояние детальной информации об автомобиле
      */
     const [car, setCar] = useState<ICarDetails>();
+
+    const  updateHandler = (car: ICarDetails) => {
+        closeModal()
+        //addCar(car)
+    }
+
+    /**
+     * Модальное окно обновления детальной информации
+     */
+    let {modal, open: openModal, close: closeModal} =  useContext(ModalContext)
 
     /**
      * Состояние загрузки
@@ -72,12 +79,30 @@ export function CarDetails() {
                 <p>Мощность двигателя: <span style={{fontWeight: 'bold'}}>{car?.pow}</span></p>
                 <p>Длинна кузова: <span style={{fontWeight: 'bold'}}>{car?.long}</span></p>
             </div>}
-            {car !== undefined && <button
-                className={btnClasses.join(' ')}
-                onClick={() => setDetails(prev => !prev)}
-            >
-                { details ? 'Скрыть детали' : 'Показать детали'}
-            </button>}
+            {car !== undefined &&
+                <>
+                    <button
+                        className={btnClasses.join(' ')}
+                        onClick={() => setDetails(prev => !prev)}
+                    >
+                        { details ? 'Скрыть детали' : 'Показать детали'}
+                    </button>
+                    <button
+                        className="py-2 px-4 border bg-cyan-500 mb-2"
+                        onClick={openModal}
+                    >
+                        Редактировать
+                    </button>
+
+                    {modal &&
+                        <Modal title="Редактировать автомобиль"
+                               onClose={closeModal}>
+                            <UpdateCar onUpdate={updateHandler}  car={car}/>
+                        </Modal>
+                    }
+                </>
+            }
+
 
         </div>
     )
