@@ -90,7 +90,7 @@ namespace СarDealership.WebApi.Controllers
             var command = _mapper.Map<CreateCarCommand>(createCarDto);
             command.UserId = UserId;
             var carId = await Mediator.Send(command);
-            return Ok(carId);
+            return Created("", carId);
         }
 
         /// <summary>

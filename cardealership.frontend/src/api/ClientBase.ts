@@ -175,17 +175,16 @@ export class ClientBase {
         if (response.headers && response.headers.forEach) {
             response.headers.forEach((v: any, k: any) => (_headers[k] = v));
         }
-        if (status === 200) {
+        if (status === 201) {
             return response.text().then((_responseText) => {
-                let result200: any = null;
-                result200 =
+                let result201: any = null;
+                result201 =
                     _responseText === ''
                         ? null
                         : <string>(
                             JSON.parse(_responseText, this.jsonParseReviver)
                         );
-                console.log('result200::', result200)
-                return result200;
+                return result201;
             });
         } else if (status === 401) {
             return response.text().then((_responseText) => {
