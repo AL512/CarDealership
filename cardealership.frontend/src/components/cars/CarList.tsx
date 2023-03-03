@@ -8,7 +8,7 @@ import {ApiObject, ClientBase} from "../../api/ClientBase";
  */
 export function CarList() {
     /**
-     *
+     * API клиен
      */
     const apiClient = new ClientBase();
 
@@ -27,7 +27,19 @@ export function CarList() {
      */
     function addCar(car: ICarLookupDto) {
         setCars(prev => [...prev, car])
-        console.log(['addCar', cars])
+    }
+    /**
+     * Удаление автомобиля в список
+     * @param car
+     */
+    function removeCar(car: ICarLookupDto) {
+        const index = cars.indexOf(car)
+        if (index !== -1) {
+            setCars(cars.filter((element) => {
+                return element.id !== car.id
+            }));
+            delete cars[index]
+        }
     }
 
     /**
@@ -43,5 +55,5 @@ export function CarList() {
         useEffect(() => {
             setTimeout(getCars, 500);
         }, []);
-        return {cars, loading, addCar}
+        return {cars, loading, addCar, removeCar}
 }

@@ -1,5 +1,5 @@
 import React, {useContext} from 'react';
-import userManager, {signinRedirect} from "../auth/user-service";
+import userManager from "../auth/user-service";
 import AuthProvider from "../auth/auth-provider";
 import {CarList} from "../components/cars/CarList";
 import {Loader} from "../components/Loader";
@@ -7,7 +7,7 @@ import {CarListItem} from "../components/cars/CarListItem";
 import {ModalContext} from "../context/ModalCarContext";
 import {Modal} from "../components/Modal";
 import {CreateCar} from "../components/cars/CreateCar";
-import {ICreateCarDto} from "../Interfases/CarInterfases";
+import {ICarLookupDto} from "../Interfases/CarInterfases";
 import {ModalState} from "../context/DialogCarModalContext";
 
 
@@ -16,12 +16,22 @@ import {ModalState} from "../context/DialogCarModalContext";
  * @constructor
  */
 export function CarListPage() {
-    const {cars, loading, addCar } = CarList()
+    const {cars, loading, addCar, removeCar} = CarList()
     const {modal, open: openModal, close: closeModal} =  useContext(ModalContext)
-    const  createHandler = (car: ICreateCarDto) => {
+    /**
+     * Добавляет в список новый автомобиль
+     * @param newCar
+     */
+    const  createHandler = (newCar: ICarLookupDto) => {
         closeModal()
-        addCar(car)
-        // TODO : Не срабатывает createHandler при создании авто
+        addCar(newCar)
+    }
+    /**
+     * Удаляет из списка автомобиль
+     * @param car
+     */
+    const  removeHandler = (car: ICarLookupDto) => {
+        removeCar(car)
     }
     return (
         <div className="container mx-auto max-w-2xl pt-5">
@@ -37,7 +47,7 @@ export function CarListPage() {
                 }
                 {cars?.map(car =>
                     <ModalState key={car.id}>
-                        <CarListItem car={car}/>
+                        <CarListItem car={car} onRemove={removeHandler}/>
                     </ModalState>
                 )}
                 { modal &&

@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
-import {ICreateCarDto} from "../../Interfases/CarInterfases";
+import {ICarLookupDto, ICreateCarDto} from "../../Interfases/CarInterfases";
 import {ErrorMessage} from "../ErrorMessage";
 import {ApiObject, ClientBase} from "../../api/ClientBase";
 
 interface ICreateCarProps {
-    onCreate: (car: ICreateCarDto) => void
+    onCreate: (car: ICarLookupDto) => void
 }
 
 /**
@@ -20,11 +20,15 @@ export function CreateCar({onCreate}: ICreateCarProps)  {
     const [newLong, setNewLong] = useState(0)
     const [newPrice, setNewPrice] = useState(0)
 
-
+    /**
+     * Созданет новый автомобиль
+     * @param Car
+     */
     async function createCar(Car: ICreateCarDto) {
         const client = new ClientBase();
-        await client.create<ICreateCarDto>('1.0', Car, ApiObject.Car);
-        console.log('CarListItem is created');
+        const responce = await client.create<ICreateCarDto>('1.0', Car, ApiObject.Car);
+        console.log('Car is created');
+        return responce;
     }
 
     const submitHandler = async (event: React.FormEvent) => {
@@ -53,9 +57,12 @@ export function CreateCar({onCreate}: ICreateCarProps)  {
             long: newLong,
             price: newPrice
         };
-        const responce = createCar(car);
-        // TODO: Вставить ИД из ответа
-        onCreate(car);
+        const responce: string = await createCar(car);
+        const carLookup: ICarLookupDto = {
+            id: responce,
+            name: newName,
+        };
+        onCreate(carLookup);
     }
     const changeNameHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
         setNewName(event.currentTarget.value)

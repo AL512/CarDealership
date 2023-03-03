@@ -1,5 +1,5 @@
 import React, {useContext} from "react";
-import {ICarDetails, ICarLookupDto, ICreateCarDto} from "../../Interfases/CarInterfases";
+import {ICarLookupDto} from "../../Interfases/CarInterfases";
 import {DialogModalContext} from "../../context/DialogCarModalContext";
 import {Modal} from "../Modal";
 import {DeleteCar} from "./DeleteCar";
@@ -7,6 +7,7 @@ import {NavLink} from 'react-router-dom';
 
 interface ICarProps {
     car: ICarLookupDto
+    onRemove: (car: ICarLookupDto) => void
 }
 
 /**
@@ -14,11 +15,11 @@ interface ICarProps {
  * @param car
  * @constructor
  */
-export function CarListItem({car}: ICarProps) {
+export function CarListItem(carProps: ICarProps) {
     let {modal, open: openModal, close: closeModal} =  useContext(DialogModalContext)
-    const  deleteHandler = (car: ICarLookupDto) => {
+    const  deleteHandler = (deleteCar: ICarLookupDto) => {
         closeModal()
-        //addCar(car)
+        carProps.onRemove(deleteCar)
     }
 
     return(
@@ -29,16 +30,16 @@ export function CarListItem({car}: ICarProps) {
                 <div>
                     <NavLink
                         className="ext-white hover:text-blue-500"
-                        to={`/cars/${car.id}`}
+                        to={`/cars/${carProps.car.id}`}
                     >
-                        {car.name}
+                        {carProps.car.name}
                     </NavLink>
                 </div>
 
                 {modal &&
                     <Modal title="Удалить автомобиль"
                            onClose={closeModal}>
-                        <DeleteCar onDelete={deleteHandler}  car={car}/>
+                        <DeleteCar onDelete={deleteHandler}  car={carProps.car}/>
                     </Modal>
                 }
                 {/* TODO : Если роль позволит, то отображаем кнопку "удалить"*/}

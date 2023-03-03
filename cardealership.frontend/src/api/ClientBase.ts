@@ -1,10 +1,6 @@
 import {ApiException} from './ApiException'
 import {
-    ICarList,
-    ICarLookupDto,
-    ICreateCarDto,
     IProblemDetails,
-    ICarDetails, IUpdateCarDto
 }
     from '../Interfases/CarInterfases'
 
@@ -87,15 +83,12 @@ export class ClientBase {
                 return this.http.fetch(url_, transformedOptions_);
             })
             .then((_response: Response) => {
-                const req: any =  this.processGetAll(_response)
-                return req;
-                //return this.processGetAll(_response);
+                return this.processGetAll<TList>(_response);
             });
     }
 
-    protected processGetAll(response: Response): Promise<ICarList> {
+    protected processGetAll<TList>(response: Response): Promise<TList> {
         const status = response.status;
-        console.log('response:: ', response)
         let _headers: any = {};
         if (response.headers && response.headers.forEach) {
             response.headers.forEach((v: any, k: any) => (_headers[k] = v));
@@ -106,7 +99,7 @@ export class ClientBase {
                 result200 =
                     _responseText === ''
                         ? null
-                        : <ICarList>(
+                        : <TList>(
                             JSON.parse(_responseText, this.jsonParseReviver)
                         );
                 return result200;
@@ -139,7 +132,7 @@ export class ClientBase {
             });
         }
         console.log('Promise.resolve<CarListVm>(<any>null)')
-        return Promise.resolve<ICarList>(<any>null);
+        return Promise.resolve<TList>(<any>null);
     }
 
     /**
@@ -182,16 +175,17 @@ export class ClientBase {
         if (response.headers && response.headers.forEach) {
             response.headers.forEach((v: any, k: any) => (_headers[k] = v));
         }
-        if (status === 201) {
+        if (status === 200) {
             return response.text().then((_responseText) => {
-                let result201: any = null;
-                result201 =
+                let result200: any = null;
+                result200 =
                     _responseText === ''
                         ? null
                         : <string>(
                             JSON.parse(_responseText, this.jsonParseReviver)
                         );
-                return result201;
+                console.log('result200::', result200)
+                return result200;
             });
         } else if (status === 401) {
             return response.text().then((_responseText) => {

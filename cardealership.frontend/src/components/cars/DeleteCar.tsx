@@ -34,8 +34,7 @@ export function DeleteCar(onDelete: DeleteCarProps) {
     const submitHandler = async (event: React.FormEvent) => {
         event.preventDefault()
         if(dialogResult) {
-            const responce = deleteCar(onDelete.car);
-            console.log(responce)
+            await deleteCar(onDelete.car);
         }
         onDelete.onDelete(onDelete.car)
     }
