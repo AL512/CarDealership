@@ -66,13 +66,15 @@ namespace СarDealership.WebApi
                     JwtBearerDefaults.AuthenticationScheme;
                 config.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             })
-                .AddJwtBearer("Bearer", options =>
+                .AddJwtBearer(Configuration["Auth:AuthenticationScheme"], options =>
                 {
                     //Адрес сервера аутентификации
                     // TODO : Вынести параметры
-                    options.Authority = "https://localhost:44386/";
-                    options.Audience = "СarDealershipWebAPI";
-                    options.RequireHttpsMetadata = false;
+                    options.Authority = Configuration["Auth:Authority"];
+                    options.Audience = Configuration["Auth:Audience"];
+                    var RequireHttpsMetadata = false;
+                    bool.TryParse(Configuration["Auth.RequireHttpsMetadata"], out RequireHttpsMetadata);
+                    options.RequireHttpsMetadata = RequireHttpsMetadata;
                 });
 
             // Добавляем генератор Swagger
