@@ -5,11 +5,21 @@ using СarDealership.Identity.Models;
 
 namespace СarDealership.Identity.Data
 {
+    /// <summary>
+    /// Контекст БД пользователей
+    /// </summary>
     public class AuthDbContext : IdentityDbContext<AppUser>
     {
+        /// <summary>
+        /// Контекст БД пользователей
+        /// </summary>
+        /// <param name="options"></param>
         public AuthDbContext(DbContextOptions<AuthDbContext> options)
             : base(options) { }
-
+        /// <summary>
+        /// Настраиваем схему
+        /// </summary>
+        /// <param name="builder">Методы для конфигурации сущностей и отношений между ними</param>
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

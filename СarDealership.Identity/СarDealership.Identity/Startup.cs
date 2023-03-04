@@ -14,6 +14,9 @@ namespace СarDealership.Identity
 {
     public class Startup
     {
+        /// <summary>
+        /// Настройки приложения
+        /// </summary>
         public IConfiguration AppConfiguration { get; }
 
         public Startup(IConfiguration configuration) =>
@@ -31,6 +34,8 @@ namespace СarDealership.Identity
 
             services.AddIdentity<AppUser, IdentityRole>(config =>
             {
+                // Настраиваем требования к паролю
+                // Простой пароль для демо
                 config.Password.RequiredLength = 4;
                 config.Password.RequireDigit = false;
                 config.Password.RequireNonAlphanumeric = false;
@@ -45,6 +50,7 @@ namespace СarDealership.Identity
                 .AddInMemoryIdentityResources(Configuration.IdentityResources)
                 .AddInMemoryApiScopes(Configuration.ApiScopes)
                 .AddInMemoryClients(Configuration.Clients)
+                // Используем демонстрационный сертификат подписи
                 .AddDeveloperSigningCredential();
 
             services.ConfigureApplicationCookie(config =>

@@ -5,21 +5,32 @@ using IdentityModel;
 
 namespace СarDealership.Identity
 {
+    /// <summary>
+    /// Информация о клиентах и ресурсах
+    /// </summary>
     public static class Configuration
     {
+        /// <summary>
+        /// Список доступных областей для клиентского приложения
+        /// </summary>
         public static IEnumerable<ApiScope> ApiScopes =>
             new List<ApiScope>
             {
                 new ApiScope("СarDealershipWebAPI", "Web API")
             };
 
+        /// <summary>
+        /// Список требований(claims) о пользователе
+        /// </summary>
         public static IEnumerable<IdentityResource> IdentityResources =>
             new List<IdentityResource>
             {
                 new IdentityResources.OpenId(),
                 new IdentityResources.Profile()
             };
-
+        /// <summary>
+        /// Список API ресурсов
+        /// </summary>
         public static IEnumerable<ApiResource> ApiResources =>
             new List<ApiResource>
             {
@@ -29,12 +40,16 @@ namespace СarDealership.Identity
                     Scopes = { "СarDealershipWebAPI" }
                 }
             };
-
+        /// <summary>
+        /// Список приложений, которые могут использовать систему
+        /// </summary>
         public static IEnumerable<Client> Clients =>
             new List<Client>
             {
                 new Client
                 {
+                    // ИД клиента. Он должен совпадать с тем,
+                    // который у клиента
                     ClientId = "cardealership-web-app",
                     ClientName = "СarDealership Web",
                     AllowedGrantTypes = GrantTypes.Code,
@@ -52,6 +67,7 @@ namespace СarDealership.Identity
                     {
                         "http://localhost:3001/signout-oidc"
                     },
+                    // Области, доступные клиенту
                     AllowedScopes =
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
