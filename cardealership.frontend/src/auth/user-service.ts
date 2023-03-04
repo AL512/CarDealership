@@ -1,14 +1,8 @@
-import { UserManager, UserManagerSettings } from 'oidc-client';
+import { UserManager} from 'oidc-client';
 import { setAuthHeader } from './auth-headers';
+import {userManagerSettings} from "../Addresses";
 
-const userManagerSettings: UserManagerSettings = {
-    client_id: 'cardealership-web-app',
-    redirect_uri: 'http://localhost:3001/signin-oidc',
-    response_type: 'code',
-    scope: 'openid profile СarDealershipWebAPI',
-    authority: 'https://localhost:44386/',
-    post_logout_redirect_uri: 'http://localhost:3001/signout-oidc',
-};
+
 
 const userManager = new UserManager(userManagerSettings);
 export async function loadUser() {

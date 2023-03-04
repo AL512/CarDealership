@@ -3,6 +3,7 @@ import {
     IProblemDetails,
 }
     from '../Interfases/CarInterfases'
+import {apiServerUrl} from "../Addresses";
 
 export enum ApiObject {
     /**
@@ -35,7 +36,7 @@ export class ClientBase {
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined =
         undefined;
 
-    constructor(baseUrl: string = 'https://localhost:44397',
+    constructor(baseUrl: string = apiServerUrl,
         http?: {
             fetch(url: RequestInfo, init?: RequestInit): Promise<Response>;
         }
