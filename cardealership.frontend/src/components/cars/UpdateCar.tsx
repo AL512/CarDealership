@@ -74,8 +74,7 @@ export function UpdateCar(onUpdate: IUpdateCarProps) {
                 long: updateLong,
                 price: updatePrice
             }
-            const responce = await updateCar(updateCarItem);
-            console.log(responce)
+            await updateCar(updateCarItem);
         }
         onUpdate.onUpdate(onUpdate.car)
 

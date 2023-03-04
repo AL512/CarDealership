@@ -1,16 +1,11 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {ApiObject, ClientBase} from "../../api/ClientBase";
-import {ICarDetails, ICarLookupDto} from "../../Interfases/CarInterfases";
+import {ICarDetails} from "../../Interfases/CarInterfases";
 import {Loader} from "../Loader";
 import {useParams} from "react-router-dom";
-import {DialogModalContext} from "../../context/DialogCarModalContext";
 import {Modal} from "../Modal";
 import {UpdateCar} from "./UpdateCar";
 import {ModalContext} from "../../context/ModalCarContext";
-
-export interface ICarDetailsProps {
-    carLookup: ICarLookupDto
-}
 
 /**
  * Получает детальное описание автомобиля
@@ -30,9 +25,9 @@ export function CarDetails() {
      */
     const [car, setCar] = useState<ICarDetails>();
 
-    const  updateHandler = (car: ICarDetails) => {
+    const  updateHandler = () => {
         closeModal()
-        //addCar(car)
+        getDetails();
     }
 
     /**
@@ -46,7 +41,7 @@ export function CarDetails() {
     const [loading, setLoading] = useState(false)
 
     /**
-     *
+     * Детальное описание автомобиля
      */
     const [details, setDetails] = useState(false)
 
