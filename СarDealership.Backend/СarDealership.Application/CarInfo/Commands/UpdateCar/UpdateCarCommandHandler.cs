@@ -50,7 +50,18 @@ namespace СarDealership.Application.CarInfo.Commands.UpdateCar
 
             entity.EditDate = DateTime.Now;
 
-            await _dbContext.SaveChangesAsync(cancellationToken);
+            using (var transaction = _dbContext.Database.BeginTransaction())
+            {
+                try
+                {
+                    await _dbContext.SaveChangesAsync(cancellationToken);
+                    await transaction.CommitAsync();
+                }
+                catch
+                {
+                    await transaction.RollbackAsync();
+                }
+            }
 
             return Unit.Value;
         }

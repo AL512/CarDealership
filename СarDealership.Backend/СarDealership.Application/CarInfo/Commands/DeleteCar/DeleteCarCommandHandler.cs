@@ -40,9 +40,19 @@ namespace СarDealership.Application.CarInfo.Commands.DeleteCar
                 throw new NotFoundException(nameof(Car), request.Id);
             }
 
-            _dbContext.Cars.Remove(entity);
-            await _dbContext.SaveChangesAsync(cancellationToken);
-
+            using (var transaction = _dbContext.Database.BeginTransaction())
+            {
+                try
+                {
+                    _dbContext.Cars.Remove(entity);
+                    await _dbContext.SaveChangesAsync(cancellationToken);
+                    await transaction.CommitAsync();
+                }
+                catch
+                {
+                    await transaction.RollbackAsync();
+                }
+            }
             return Unit.Value;
         }
     }

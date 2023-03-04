@@ -45,9 +45,19 @@ namespace СarDealership.Application.CarInfo.Commands.CreateCar
                 EditDate = null
             };
 
-            await _dbContext.Cars.AddAsync(car, cancellationToken);
-            await _dbContext.SaveChangesAsync(cancellationToken);
-
+            using (var transaction = _dbContext.Database.BeginTransaction())
+            {
+                try
+                {
+                    await _dbContext.Cars.AddAsync(car, cancellationToken);
+                    await _dbContext.SaveChangesAsync(cancellationToken);
+                    await transaction.CommitAsync();
+                }
+                catch
+                {
+                    await transaction.RollbackAsync();
+                }
+            }
             return car.Id;
         }
     }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using СarDealership.Application.Interfaces;
 using СarDealership.Domain.CarInfo;
 using СarDealership.Persistence.EntityTypeConfigurations;
@@ -11,6 +12,8 @@ namespace СarDealership.Persistence
     public class СarDealershipDbContext : DbContext, IСarDealershipDbContext
     {
         public DbSet<Car> Cars { get; set; }
+
+        public DatabaseFacade database => Database;
 
         /// <summary>
         /// Реализация контекста БД
