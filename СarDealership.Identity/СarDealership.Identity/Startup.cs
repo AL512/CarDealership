@@ -9,6 +9,7 @@ using Microsoft.Extensions.FileProviders;
 using Microsoft.EntityFrameworkCore;
 using ÑarDealership.Identity.Data;
 using ÑarDealership.Identity.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace ÑarDealership.Identity
 {
@@ -80,6 +81,10 @@ namespace ÑarDealership.Identity
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapDefaultControllerRoute();
+                endpoints.MapGet("/", async context =>
+                {
+                    await context.Response.WriteAsync("The authorization server is running");
+                });
             });
         }
     }
