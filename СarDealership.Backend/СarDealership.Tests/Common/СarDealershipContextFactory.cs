@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using СarDealership.Domain;
 using СarDealership.Domain.CarInfo;
 using СarDealership.Persistence;
@@ -34,6 +35,7 @@ namespace СarDealership.Tests.Common
         {
             var options = new DbContextOptionsBuilder<СarDealershipDbContext>()
                 .UseInMemoryDatabase(Guid.NewGuid().ToString())
+                .ConfigureWarnings(x => x.Ignore(InMemoryEventId.TransactionIgnoredWarning))
                 .Options;
             var context = new СarDealershipDbContext(options);
             context.Database.EnsureCreated();

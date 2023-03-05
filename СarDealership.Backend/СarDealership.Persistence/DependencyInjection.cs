@@ -22,7 +22,6 @@ namespace СarDealership.Persistence
             var connectionString = configuration["DbConnection"];
             services.AddDbContext<СarDealershipDbContext>(options =>
             {
-                // TODO : Переделать БД на MS SQl local
                 //options.UseSqlite(connectionString);
                 options.UseSqlServer(connectionString, b => b.MigrationsAssembly("СarDealership.WebApi"));
             });
