@@ -57,13 +57,13 @@ namespace СarDealership.Application.CarInfo.Commands.UpdateCar
                     await _dbContext.SaveChangesAsync(cancellationToken);
                     await transaction.CommitAsync();
                 }
+                catch (DbUpdateConcurrencyException ex)
+                {
+                    // TODO: Обработка конфликтов параллелизма. Нужна ?
+                }
                 catch (Exception ex)
                 {
                     await transaction.RollbackAsync();
-                    if (ex is DbUpdateConcurrencyException upEx)
-                    {
-
-                    }
                 }
             }
 

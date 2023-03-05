@@ -15,10 +15,9 @@ namespace СarDealership.Application.CarInfo.Commands.CreateCar
         {
             RuleFor(command => command.Name).NotEmpty().MaximumLength(250);
             RuleFor(command => command.UserId).NotEqual(Guid.Empty);
-            /*RuleFor(command => command.Pow).GreaterThan(0);
+            RuleFor(command => command.Pow).GreaterThan(0);
             RuleFor(command => command.Long).GreaterThan(0);
-            // TODO : Валидации по точности цены автомобиля?
-            RuleFor(command => command.Price).GreaterThan(0);*/
+            RuleFor(command => command.Price).GreaterThan(0);
         }
     }
 }

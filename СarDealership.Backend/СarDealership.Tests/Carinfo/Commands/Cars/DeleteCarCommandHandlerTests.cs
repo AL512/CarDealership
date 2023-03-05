@@ -59,37 +59,5 @@ namespace СarDealership.Tests.Carinfo.Commands.Cars
                     },
                     CancellationToken.None));
         }
-
-        // TODO : <_> Проверяет появления исключения "NotFoundException" при удаление автомобиля пользователем, который его не создавал. Переделать логику
-        // TODO : Добавить проверку по ролям
-        /*/// <summary>
-        /// Проверяет появления исключения "NotFoundException"
-        /// при удаление автомобиля пользователем, который его не создавал
-        /// </summary>
-        /// <returns></returns>
-        [Fact]
-        public async Task DeleteCarCommandHandler_FailOnWrongUserId()
-        {
-            
-            // Arrange
-            var deleteHandler = new DeleteCarCommandHandler(Context);
-            var createHandler = new CreateCarCommandHandler(Context);
-            var carId = await createHandler.Handle(
-                new CreateCarCommand
-                {
-                    Name = "CarName",
-                    UserId = CarsContextFactory.UserAId
-                }, CancellationToken.None);
-
-            // Act
-            // Assert
-            await Assert.ThrowsAsync<NotFoundException>(async () =>
-                await deleteHandler.Handle(
-                    new DeleteCarCommand
-                    {
-                        Id = carId,
-                        UserId = CarsContextFactory.UserBId
-                    }, CancellationToken.None));
-        }*/
     }
 }

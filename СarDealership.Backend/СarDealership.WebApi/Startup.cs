@@ -69,7 +69,6 @@ namespace СarDealership.WebApi
                 .AddJwtBearer(Configuration["Auth:AuthenticationScheme"], options =>
                 {
                     //Адрес сервера аутентификации
-                    // TODO : Вынести параметры
                     options.Authority = Configuration["Auth:Authority"];
                     options.Audience = Configuration["Auth:Audience"];
                     var RequireHttpsMetadata = false;

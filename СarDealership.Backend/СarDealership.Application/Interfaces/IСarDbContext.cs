@@ -13,7 +13,6 @@ namespace СarDealership.Application.Interfaces
         /// <summary>
         /// Контекст автомобилей
         /// </summary>
-        // TODO : Вынести DbSet<Car> Cars и другое в отдельные интерфейсы?
         DbSet<Car> Cars { get; set; }
     }
 }
