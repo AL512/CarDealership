@@ -50,23 +50,23 @@ export function UpdateCar(onUpdate: IUpdateCarProps) {
     const submitHandler = async (event: React.FormEvent) => {
         setError('')
         event.preventDefault()
-        if(updateName.trim().length === 0) {
-            setError('Введите корректное название автомобиля')
-            return
-        }
-        if(updatePow <= 0) {
-            setError('Мощность двигателя не может быть отрицательной')
-            return
-        }
-        if(updateLong <= 0) {
-            setError('Длянна кузова не может быть отрицательной')
-            return
-        }
-        if(updatePrice <= 0) {
-            setError('Стоимость не может быть отрицательной')
-            return
-        }
         if(updateFlag) {
+            if(updateName.trim().length === 0) {
+                setError('Введите корректное название автомобиля')
+                return
+            }
+            if(updatePow <= 0) {
+                setError('Мощность двигателя не может быть отрицательной')
+                return
+            }
+            if(updateLong <= 0) {
+                setError('Длянна кузова не может быть отрицательной')
+                return
+            }
+            if(updatePrice <= 0) {
+                setError('Стоимость не может быть отрицательной')
+                return
+            }
             const updateCarItem: ICarDetails = {
                 id: onUpdate.car.id,
                 name: updateName,
