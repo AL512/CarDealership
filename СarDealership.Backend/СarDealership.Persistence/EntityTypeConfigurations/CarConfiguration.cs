@@ -19,6 +19,7 @@ namespace СarDealership.Persistence.EntityTypeConfigurations
             builder.HasIndex(car => car.Id).IsUnique();
             builder.Property(car => car.Name).HasMaxLength(250).IsRequired();
             builder.Property(car => car.Price).HasColumnType("money").HasPrecision(10, 2);
+            builder.Property(p => p.Version).IsRowVersion();
         }
     }
 }

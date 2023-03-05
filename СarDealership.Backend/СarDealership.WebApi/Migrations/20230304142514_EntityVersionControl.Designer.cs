@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using СarDealership.Persistence;
 
@@ -11,9 +12,10 @@ using СarDealership.Persistence;
 namespace СarDealership.WebApi.Migrations
 {
     [DbContext(typeof(СarDealershipDbContext))]
-    partial class СarDealershipDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230304142514_EntityVersionControl")]
+    partial class EntityVersionControl
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

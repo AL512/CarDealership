@@ -1,5 +1,4 @@
-﻿using MediatR;
-using System;
+﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
 using СarDealership.Application.Interfaces;
@@ -53,7 +52,7 @@ namespace СarDealership.Application.CarInfo.Commands.CreateCar
                     await _dbContext.SaveChangesAsync(cancellationToken);
                     await transaction.CommitAsync();
                 }
-                catch
+                catch(Exception ex)
                 {
                     await transaction.RollbackAsync();
                 }

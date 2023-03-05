@@ -1,9 +1,9 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using MediatR;
 using СarDealership.Application.Interfaces;
 using СarDealership.Application.Common.Exceptions;
 using СarDealership.Domain.CarInfo;
+using System;
 
 namespace СarDealership.Application.CarInfo.Commands.DeleteCar
 {
@@ -48,7 +48,7 @@ namespace СarDealership.Application.CarInfo.Commands.DeleteCar
                     await _dbContext.SaveChangesAsync(cancellationToken);
                     await transaction.CommitAsync();
                 }
-                catch
+                catch(Exception ex)
                 {
                     await transaction.RollbackAsync();
                 }

@@ -15,5 +15,9 @@ namespace СarDealership.Domain.Base
         /// ИД пользователя
         /// </summary>
         public Guid UserId { get; set; }
+        /// <summary>
+        /// Версия сущности
+        /// </summary>
+        public byte[] Version { get; set; }
     }
 }
