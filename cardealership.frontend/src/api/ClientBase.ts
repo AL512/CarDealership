@@ -28,6 +28,11 @@ export enum ApiObject {
  * Базовый класс клиента
  */
 export class ClientBase {
+    readonly Status200OK: number  = 200
+    readonly Status401Unauthorized: number = 401
+    readonly Status201Created: number = 201
+    readonly Status204NoContent: number = 204
+
     protected  baseUrl?: string;
     protected http: {
         fetch(url: RequestInfo, init?: RequestInit): Promise<Response>;
@@ -94,7 +99,7 @@ export class ClientBase {
         if (response.headers && response.headers.forEach) {
             response.headers.forEach((v: any, k: any) => (_headers[k] = v));
         }
-        if (status === 200) {
+        if (status === this.Status200OK) {
             return response.text().then((_responseText) => {
                 let result200: any = null;
                 result200 =
@@ -105,7 +110,7 @@ export class ClientBase {
                         );
                 return result200;
             });
-        } else if (status === 401) {
+        } else if (status === this.Status401Unauthorized) {
             return response.text().then((_responseText) => {
                 let result401: any = null;
                 result401 =
@@ -122,7 +127,7 @@ export class ClientBase {
                     result401
                 );
             });
-        } else if (status !== 200 && status !== 204) {
+        } else if (status !== this.Status200OK && status !== this.Status204NoContent) {
             return response.text().then((_responseText) => {
                 return this.throwException(
                     'An unexpected server error occurred.',
@@ -176,7 +181,7 @@ export class ClientBase {
         if (response.headers && response.headers.forEach) {
             response.headers.forEach((v: any, k: any) => (_headers[k] = v));
         }
-        if (status === 201) {
+        if (status === this.Status201Created) {
             return response.text().then((_responseText) => {
                 let result201: any = null;
                 result201 =
@@ -187,7 +192,7 @@ export class ClientBase {
                         );
                 return result201;
             });
-        } else if (status === 401) {
+        } else if (status === this.Status401Unauthorized) {
             return response.text().then((_responseText) => {
                 let result401: any = null;
                 result401 =
@@ -204,7 +209,7 @@ export class ClientBase {
                     result401
                 );
             });
-        } else if (status !== 200 && status !== 204) {
+        } else if (status !== this.Status200OK && status !== this.Status204NoContent) {
             return response.text().then((_responseText) => {
                 return this.throwException(
                     'An unexpected server error occurred.',
@@ -254,11 +259,11 @@ export class ClientBase {
         if (response.headers && response.headers.forEach) {
             response.headers.forEach((v: any, k: any) => (_headers[k] = v));
         }
-        if (status === 204) {
+        if (status === this.Status204NoContent) {
             return response.text().then((_responseText) => {
                 return;
             });
-        } else if (status === 401) {
+        } else if (status === this.Status401Unauthorized) {
             return response.text().then((_responseText) => {
                 let result401: any = null;
                 result401 =
@@ -275,7 +280,7 @@ export class ClientBase {
                     result401
                 );
             });
-        } else if (status !== 200 && status !== 204) {
+        } else if (status !== this.Status200OK && status !== this.Status204NoContent) {
             return response.text().then((_responseText) => {
                 return this.throwException(
                     'An unexpected server error occurred.',
@@ -327,7 +332,7 @@ export class ClientBase {
         if (response.headers && response.headers.forEach) {
             response.headers.forEach((v: any, k: any) => (_headers[k] = v));
         }
-        if (status === 200) {
+        if (status === this.Status200OK) {
             return response.text().then((_responseText) => {
                 let result200: any = null;
                 result200 =
@@ -338,7 +343,7 @@ export class ClientBase {
                         );
                 return result200;
             });
-        } else if (status === 401) {
+        } else if (status === this.Status401Unauthorized) {
             return response.text().then((_responseText) => {
                 let result401: any = null;
                 result401 =
@@ -355,7 +360,7 @@ export class ClientBase {
                     result401
                 );
             });
-        } else if (status !== 200 && status !== 204) {
+        } else if (status !== this.Status200OK && status !== this.Status204NoContent) {
             return response.text().then((_responseText) => {
                 return this.throwException(
                     'An unexpected server error occurred.',
@@ -401,11 +406,11 @@ export class ClientBase {
         if (response.headers && response.headers.forEach) {
             response.headers.forEach((v: any, k: any) => (_headers[k] = v));
         }
-        if (status === 204) {
+        if (status === this.Status204NoContent) {
             return response.text().then((_responseText) => {
                 return;
             });
-        } else if (status === 401) {
+        } else if (status === this.Status401Unauthorized) {
             return response.text().then((_responseText) => {
                 let result401: any = null;
                 result401 =
@@ -422,7 +427,7 @@ export class ClientBase {
                     result401
                 );
             });
-        } else if (status !== 200 && status !== 204) {
+        } else if (status !== this.Status200OK && status !== this.Status204NoContent) {
             return response.text().then((_responseText) => {
                 return this.throwException(
                     'An unexpected server error occurred.',
